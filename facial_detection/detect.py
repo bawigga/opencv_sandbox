@@ -1,10 +1,10 @@
+import os
 import numpy as np
 import cv2
-from pprint import pprint
 
-faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+cascadeFile = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'haarcascade_frontalface_default.xml')
+faceCascade = cv2.CascadeClassifier(cascadeFile)
 cam = cv2.VideoCapture(0)
-
 cam.set(3,640)
 cam.set(4,480)
 
@@ -15,7 +15,7 @@ while(cam.isOpened()):
 
         faces = faceCascade.detectMultiScale(
             frame,
-            scaleFactor=1.5,
+            scaleFactor=1.2,
             minNeighbors=5,
             minSize=(30, 30),
             flags=cv2.cv.CV_HAAR_SCALE_IMAGE
@@ -32,5 +32,5 @@ while(cam.isOpened()):
         break
 
 # Release everything if job is finished
-cap.release()
+cam.release()
 cv2.destroyAllWindows()
